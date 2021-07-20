@@ -85,6 +85,7 @@ while run:
                     drawing_color = button.color
                     if button.text == "Clear":
                         grid = init_grid(ROWS, COLS, BG_COLOR)
+                        drawing_color = BLACK
 
     draw(WIN, grid, buttons)
 
