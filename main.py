@@ -29,9 +29,13 @@ def draw_grid(win, grid):
             pygame.draw.line(win, BLACK, (i * PIXEL_SIZE, 0), (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT))
 
 
-def draw(win, grid):
+def draw(win, grid, buttons):
     win.fill(BG_COLOR)
     draw_grid(win, grid)
+
+    for button in buttons:
+        button.draw(win)
+
     pygame.display.update()
 
 
@@ -75,8 +79,13 @@ while run:
                 row, col = get_row_col_from_pos(pos)
                 grid[row][col] = drawing_color
             except IndexError:
-                pass
+                for button in buttons:
+                    if not button.clicked(pos):
+                        continue
+                    drawing_color = button.color
+                    if button.text == "Clear":
+                        grid = init_grid(ROWS, COLS, BG_COLOR)
 
-    draw(WIN, grid)
+    draw(WIN, grid, buttons)
 
 pygame.quit()
